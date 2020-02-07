@@ -28,16 +28,17 @@ public class MainAppLayout extends AppLayoutRouterLayout<LeftLayouts.LeftRespons
 
         com.vaadin.flow.component.html.Label label = new Label("CuboDoo");
         label.getStyle().set("marginLeft", "65px");
-        label.getStyle().set("color","hsla(214, 90%, 52%, 0.5)");
+        label.getStyle().set("color","hsl(214, 90%, 52%)");
         label.getStyle().set("font-size", "70px");
         label.getStyle().set("font-family","Open Sans");
+
 
 
         init(AppLayoutBuilder.get(LeftLayouts.LeftResponsive.class)
                 .withTitle(label)
                 .withAppMenu(LeftAppMenuBuilder.get()
                         .addToSection(HEADER,
-                                new LeftHeaderItem("Bienvenido", "Menu", "https://previews.123rf.com/images/martialred/martialred1710/martialred171000007/88316246-icono-de-vector-de-arte-de-l%C3%ADnea-cubo-tridimensional-o-3d-hexaedro-.jpg")
+                                new LeftHeaderItem("Bienvenido", "", "https://previews.123rf.com/images/martialred/martialred1710/martialred171000007/88316246-icono-de-vector-de-arte-de-l%C3%ADnea-cubo-tridimensional-o-3d-hexaedro-.jpg")
                         )
                         .add(new LeftNavigationItem("Home", VaadinIcon.HOME.create(), View1.class),
                                 new LeftNavigationItem("Facturas", VaadinIcon.COIN_PILES.create(), View2.class),
