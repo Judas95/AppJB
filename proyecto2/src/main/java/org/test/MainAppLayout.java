@@ -36,7 +36,7 @@ public class MainAppLayout extends AppLayoutRouterLayout<LeftLayouts.LeftRespons
                         .add(new LeftNavigationItem("Home", VaadinIcon.HOME.create(), Home.class),
                                 new LeftNavigationItem("Facturas", VaadinIcon.COIN_PILES.create(), FacturasView.class),
                                 new LeftNavigationItem("Clientes", VaadinIcon.GROUP.create(), ClientesView.class),
-                                new LeftNavigationItem("XXX", VaadinIcon.DIAMOND_O.create(), Pruebas.class))
+                                new LeftNavigationItem("Home", VaadinIcon.DIAMOND_O.create(), Pruebas.class))
                         .build())
                 .build());
     }

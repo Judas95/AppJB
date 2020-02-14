@@ -71,7 +71,7 @@ public class Login extends VerticalLayout  {
         logoV.setColor("hsl(214, 90%, 52%)");
         logoV.setSize("3%");
         logoV.addClickListener(
-                event -> getUI().ifPresent(ui -> ui.navigate("MainView")));
+                event -> getUI().ifPresent(ui -> ui.navigate("home")));
 
         Div logoVV = new Div();
         logoVV.add(logoV);
