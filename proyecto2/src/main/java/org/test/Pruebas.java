@@ -21,8 +21,10 @@ import java.util.stream.Stream;
 
 @Route(value = "view3", layout = MainAppLayout.class)
 
-public class View3 extends VerticalLayout {
-    public View3() {
+public class Pruebas extends VerticalLayout {
+    public Pruebas() {
+        Button botonusuarios = new Button ("Ir a usuarios");
+        add(botonusuarios);
 
     }
 }

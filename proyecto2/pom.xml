@@ -135,6 +135,14 @@
             <artifactId>resteasy-client</artifactId>
             <version>4.4.1.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.vaadin.helper</groupId>
+            <artifactId>url-parameter-mapping</artifactId>
+            <version>1.0.0-beta2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <!-- https://mvnrepository.com/artifact/com.sun/tools -->
+
     </dependencies>
 
     <build>

@@ -1,63 +1,84 @@
 package org.test;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Factura {
 
-        private int id;
-        private int fecha;
-        private int total;
-        private int sinimpuestos;
+        private int Idfactura;
+        private String Cliente;
+        private LocalDate Facturado;
+        private LocalDate Vencimiento;
+        private double   Precio;
+        private double  Total;
+        private int Idcliente;
 
-    public int getId() {
-        return id;
+    public Factura() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Factura(int idfactura, String cliente, LocalDate facturado, LocalDate vencimiento, double precio, double total, int idcliente) {
+        Idfactura = idfactura;
+        Cliente = cliente;
+        Facturado = facturado;
+        Vencimiento = vencimiento;
+        Precio = precio;
+        Total = total;
+        Idcliente = idcliente;
     }
 
-    public int getFecha() {
-        return fecha;
+    public int getIdfactura() {
+        return Idfactura;
     }
 
-    public void setFecha(int fecha) {
-        this.fecha = fecha;
+    public void setIdfactura(int idfactura) {
+        Idfactura = idfactura;
     }
 
-    public int getTotal() {
-        return total;
+    public String getCliente() {
+        return Cliente;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public void setCliente(String cliente) {
+        Cliente = cliente;
     }
 
-    public int getSinimpuestos() {
-        return sinimpuestos;
+    public LocalDate getFacturado() {
+        return Facturado;
     }
 
-    public void setSinimpuestos(int sinimpuestos) {
-        this.sinimpuestos = sinimpuestos;
+    public void setFacturado(LocalDate facturado) {
+        Facturado = facturado;
     }
 
-    public int getImpuestos() {
-        return impuestos;
+    public LocalDate getVencimiento() {
+        return Vencimiento;
     }
 
-    public void setImpuestos(int impuestos) {
-        this.impuestos = impuestos;
+    public void setVencimiento(LocalDate vencimiento) {
+        Vencimiento = vencimiento;
     }
 
-    public Factura(int id, int fecha, int total, int sinimpuestos, int impuestos) {
-        this.id = id;
-        this.fecha = fecha;
-        this.total = total;
-        this.sinimpuestos = sinimpuestos;
-        this.impuestos = impuestos;
+    public double getPrecio() {
+        return Precio;
     }
 
-    private int impuestos;
+    public void setPrecio(double precio) {
+        Precio = precio;
+    }
 
+    public double getTotal() {
+        return Total;
+    }
 
+    public void setTotal(double total) {
+        Total = total;
+    }
+
+    public int getIdcliente() {
+        return Idcliente;
+    }
+
+    public void setIdcliente(int idcliente) {
+        Idcliente = idcliente;
+    }
 }

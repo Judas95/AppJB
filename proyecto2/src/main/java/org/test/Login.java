@@ -49,8 +49,6 @@ public class Login extends VerticalLayout  {
     PasswordField passwordField;
 
     public Login() {
-
-
         SetMainLogo();
         SetLoginComponents();
         SetSecondaryLogo();
@@ -79,11 +77,9 @@ public class Login extends VerticalLayout  {
         logoVV.add(logoV);
         add(logoVV);
         logoVV.getStyle().set("marginLeft", "700px");
-
     }
 
     public void SetLoginComponents(){
-
         userNameTextField = new TextField();
         userNameTextField.getElement().setAttribute("name", "username"); //
         passwordField = new PasswordField();
@@ -127,7 +123,6 @@ public class Login extends VerticalLayout  {
         add(pedircontra);
         pedircontra.getStyle().set("marginLeft", "700px");
 
-
         Div datopass = new Div();
         datopass.add(passwordField);
         add(datopass);
@@ -143,24 +138,21 @@ public class Login extends VerticalLayout  {
     public void auth(){
         //Conexion
         com.vaadin.flow.component.html.Label fallo = new Label("Datos incorrectos");
-
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://192.168.103.85:8080/OdooConnection-0.0.1-SNAPSHOT/rest/supplier/authenticate?username="+userNameTextField.getValue().toString()+"&password="+passwordField.getValue().toString());
+        WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/authenticate?username="+userNameTextField.getValue().toString()+"&password="+passwordField.getValue().toString());
         String s = target.request().get(String.class);
         System.out.println(s);
         System.out.println(userNameTextField);
         System.out.println(passwordField);
+
         if (Integer.parseInt(s) > 0){
-            getUI().ifPresent(ui -> ui.navigate("MainView"));
+            getUI().ifPresent(ui -> ui.navigate("MainView"+"/"+s));
         }else{
             Notification notification = new Notification(
             "Datos incorrectos.", 3000,
             Notification.Position.MIDDLE);
             notification.open();
-
         }
     }
-
-
 }
 
