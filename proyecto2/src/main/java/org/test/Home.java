@@ -27,8 +27,6 @@ public class Home extends VerticalLayout {
         video();
     }
 
-
-
     public void Home (){
         Icon logoV = new Icon(VaadinIcon.HOME);
         logoV.getStyle().set("cursor", "pointer");

@@ -63,7 +63,8 @@ public class FacturasView extends VerticalLayout {
 
          facturas = new GridCrud<>(Factura.class);
          facturas.getGrid().removeColumnByKey("idfactura");
-         facturas.getCrudFormFactory().setDisabledProperties("idfactura","cliente");
+         facturas.getCrudFormFactory().setDisabledProperties("idfactura","cliente","precio","total");
+
          facturas.setCrudListener(new CrudListener<Factura>() {
             @Override
             public Collection<Factura> findAll() {
@@ -109,9 +110,15 @@ public class FacturasView extends VerticalLayout {
                             e.printStackTrace();
                         }
 
+
             } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
-                    }return factura;}
+                    }
+                Notification notification = new Notification(
+                        "Factura Creada Correctamente.", 2000,
+                        Notification.Position.MIDDLE);
+                notification.open();
+                    return factura;}
 
                 @Override
             public Factura update(Factura factura)
@@ -136,9 +143,14 @@ public class FacturasView extends VerticalLayout {
                          CloseableHttpResponse response = httpClient.execute(httpPut)) {
                         System.out.println(EntityUtils.toString(response.getEntity()));
                     }
+
                 } catch(IOException e){
                     e.printStackTrace();
                 }
+                Notification notification = new Notification(
+                        "Datos Actualizados.", 2000,
+                        Notification.Position.MIDDLE);
+                notification.open();
                 return factura;
             }
 
@@ -158,7 +170,7 @@ public class FacturasView extends VerticalLayout {
                 }
             }
                 Notification notification = new Notification(
-                        "Borrado correctamente.", 3000,
+                        "Borrado correctamente.", 2000,
                         Notification.Position.MIDDLE);
                 notification.open();
             }

@@ -6,6 +6,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.crud.*;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -21,10 +22,15 @@ import java.util.stream.Stream;
 
 @Route(value = "view3", layout = MainAppLayout.class)
 
-public class Pruebas extends VerticalLayout {
-    public Pruebas() {
+public class Almacen extends VerticalLayout {
+    public Almacen() {
         Button botonusuarios = new Button ("Ir a usuarios");
         add(botonusuarios);
+
+        Image image = new Image("frontend/images/image8.png","a.png");
+        add(image);
+
+
 
     }
 }

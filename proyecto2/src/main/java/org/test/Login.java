@@ -1,5 +1,6 @@
 package org.test;
 
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 
@@ -71,7 +72,7 @@ public class Login extends VerticalLayout  {
         logoV.setColor("hsl(214, 90%, 52%)");
         logoV.setSize("3%");
         logoV.addClickListener(
-                event -> getUI().ifPresent(ui -> ui.navigate("home")));
+                event -> getUI().ifPresent(ui -> ui.navigate("home"+"/"+8)));
 
         Div logoVV = new Div();
         logoVV.add(logoV);
@@ -85,7 +86,9 @@ public class Login extends VerticalLayout  {
         passwordField = new PasswordField();
         passwordField.getElement().setAttribute("name", "password"); //
         Button submitButton = new Button("Login");
+        submitButton.addClickShortcut(Key.ENTER);
         submitButton.addClickListener(e->auth());
+
 
         FormLayout formLayout = new FormLayout(); //
         formLayout.add(userNameTextField, passwordField, submitButton);
@@ -149,7 +152,7 @@ public class Login extends VerticalLayout  {
             getUI().ifPresent(ui -> ui.navigate("MainView"+"/"+s));
         }else{
             Notification notification = new Notification(
-            "Datos incorrectos.", 3000,
+            "Datos incorrectos.", 2000,
             Notification.Position.MIDDLE);
             notification.open();
         }

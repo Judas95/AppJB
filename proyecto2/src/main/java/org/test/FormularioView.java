@@ -61,18 +61,12 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
         botonbackpage.addClickListener(e -> backpage());
         this.add(botonbackpage);
 
-
     }
-
     private void setForm(Factura factura ) {
-
-
         fl.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("20em", 1),
                 new FormLayout.ResponsiveStep("20em", 2),
                 new FormLayout.ResponsiveStep("20em", 3));
-
-
         TextField idfactura = new TextField();
         idfactura.setLabel("Id Factura");
         idfactura.setValue(String.valueOf(factura.getIdfactura()));
@@ -134,8 +128,7 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
 
     public void tablaproductos(String idFactura ){
         GridCrud<Producto> productos = new GridCrud<>(Producto.class);
-
-        productos.getCrudFormFactory().setDisabledProperties("invoiceLineId");
+        productos.getCrudFormFactory().setDisabledProperties("name","invoiceLineId","preciofinal");
         productos.setCrudListener(new CrudListener<Producto>() {
             @Override
             public Collection<Producto> findAll() {
@@ -184,7 +177,12 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
 
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
-                }return producto;
+                }
+                    Notification notification = new Notification(
+                            "Producto Creado Correctamente.", 2000,
+                            Notification.Position.MIDDLE);
+                    notification.open();
+                return producto;
             }
 
             @Override
@@ -198,7 +196,7 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
                 facturaJson.put("quantity", producto.getCantidad());
 
                 try{
-                    String putEndpoint = "http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/updateProductWithinInvoice?userId="+Integer.parseInt(algo.getObject());
+                    String putEndpoint = "http:/192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/updateProductWithinInvoice?userId="+Integer.parseInt(algo.getObject());
                     CloseableHttpClient httpclient = HttpClients.createDefault();
                     HttpPut httpPut = new HttpPut(putEndpoint);
                     httpPut.setHeader("Accept", "application/json");
@@ -212,6 +210,10 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
                 } catch(IOException e){
                     e.printStackTrace();
                 }
+                Notification notification = new Notification(
+                        "Producto Actualizado Correctamente.", 2000,
+                        Notification.Position.MIDDLE);
+                notification.open();
                 return producto;
             }
 
@@ -231,7 +233,7 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
                     }
                 }
                 Notification notification = new Notification(
-                        "Borrado correctamente.", 3000,
+                        "Producto Eliminado correctamente.", 2000,
                         Notification.Position.MIDDLE);
                 notification.open();
             }
