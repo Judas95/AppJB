@@ -1,25 +1,18 @@
 package org.test;
 
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
+
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.crud.Crud;
-import com.vaadin.flow.component.crud.CrudGrid;
-import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.ItemClickEvent;
-import com.vaadin.flow.component.grid.ItemDoubleClickEvent;
+
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Span;
+
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.data.renderer.ClickableRenderer;
+
 import com.vaadin.flow.router.Route;
-import elemental.json.JsonObject;
-import jdk.internal.net.http.HttpClientBuilderImpl;
-import jdk.vm.ci.meta.Local;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -38,11 +31,10 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import java.awt.*;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.sql.SQLException;
-import java.sql.SQLOutput;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,8 +51,6 @@ public class FacturasView extends VerticalLayout {
     }
 
     public void facturalist (){
-        System.out.println(algo.getObject());
-
          facturas = new GridCrud<>(Factura.class);
          facturas.getGrid().removeColumnByKey("idfactura");
          facturas.getCrudFormFactory().setDisabledProperties("idfactura","cliente","precio","total");
@@ -69,7 +59,7 @@ public class FacturasView extends VerticalLayout {
             @Override
             public Collection<Factura> findAll() {
                 Client client = ClientBuilder.newClient();
-                WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/getInvoices?userId="+Integer.parseInt(algo.getObject()));
+                WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/getInvoices?userId="+Integer.parseInt(algo.getObject()));
                 String s = target.request().get(String.class);
                 JSONArray factur = new JSONArray(s);
                 client.close();
@@ -87,77 +77,94 @@ public class FacturasView extends VerticalLayout {
                 return factura;
             }
             @Override
-            public Factura add(Factura factura) {
-                    try{
-                        HttpPost post = new HttpPost("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/createInvoice?userId="+Integer.parseInt(algo.getObject()));
-                        JSONObject jsonObjectfactura = new JSONObject();
-                        jsonObjectfactura.put("invoiceId", factura.getIdfactura());
-                        jsonObjectfactura.put("vendorDisplayName", factura.getCliente());
-                        jsonObjectfactura.put("date_invoice", factura.getFacturado());
-                        jsonObjectfactura.put("date_due", String.valueOf(factura.getVencimiento()));
-                        jsonObjectfactura.put("amount_untaxed", factura.getPrecio());
-                        jsonObjectfactura.put("amount_total", factura.getTotal());
-                        jsonObjectfactura.put("partner_id",factura.getIdcliente());
+            public Factura add(Factura factura)
+            {if(String.valueOf(factura.getIdcliente()) == null || factura.getFacturado()==null || factura.getVencimiento() == null){
+                Notification notification = new Notification(
+                        "Datos imcompletos.", 2000,
+                        Notification.Position.MIDDLE);
+                notification.open();
+            }else {try{
+                HttpPost post = new HttpPost("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/createInvoice?userId="+Integer.parseInt(algo.getObject()));
+                JSONObject jsonObjectfactura = new JSONObject();
+                jsonObjectfactura.put("invoiceId", factura.getIdfactura());
+                jsonObjectfactura.put("vendorDisplayName", factura.getCliente());
+                jsonObjectfactura.put("date_invoice", factura.getFacturado());
+                jsonObjectfactura.put("date_due", String.valueOf(factura.getVencimiento()));
+                jsonObjectfactura.put("amount_untaxed", factura.getPrecio());
+                jsonObjectfactura.put("amount_total", factura.getTotal());
+                jsonObjectfactura.put("partner_id",factura.getIdcliente());
 
-                        post.setEntity(new StringEntity(jsonObjectfactura.toString()));
-                        post.setHeader("Content-type", "application/json");
-                        try (CloseableHttpClient httpClient = HttpClients.createDefault();
-                             CloseableHttpResponse response = httpClient.execute(post)) {
-                            System.out.println(EntityUtils.toString(response.getEntity()));
-                        } catch (ClientProtocolException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                post.setEntity(new StringEntity(jsonObjectfactura.toString()));
+                post.setHeader("Content-type", "application/json");
+                try (CloseableHttpClient httpClient = HttpClients.createDefault();
+                     CloseableHttpResponse response = httpClient.execute(post)) {
+                    System.out.println(EntityUtils.toString(response.getEntity()));
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
 
             } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                e.printStackTrace();
+            }
                 Notification notification = new Notification(
                         "Factura Creada Correctamente.", 2000,
                         Notification.Position.MIDDLE);
-                notification.open();
-                    return factura;}
+                notification.open();}
+                return factura;}
+
 
                 @Override
             public Factura update(Factura factura)
             {
-                JSONObject facturaJson = new JSONObject();
-                facturaJson.put("invoiceId",factura.getIdfactura());
-                facturaJson.put("vendorDisplayName", factura.getCliente());
-                facturaJson.put("date_invoice",factura.getFacturado());
-                facturaJson.put("date_due", factura.getVencimiento());
-                facturaJson.put("amount_untaxed", factura.getPrecio());
-                facturaJson.put("amount_total",factura.getTotal());
-                facturaJson.put("partner_id",factura.getIdcliente());
-                try{
-                    String putEndpoint = "http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/updateInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+factura.getIdfactura();
-                    CloseableHttpClient httpclient = HttpClients.createDefault();
-                    HttpPut httpPut = new HttpPut(putEndpoint);
-                    httpPut.setHeader("Accept", "application/json");
-                    httpPut.setHeader("Content-type", "application/json");
-                    StringEntity params =new StringEntity(facturaJson.toString());
-                    httpPut.setEntity(params);
-                    try (CloseableHttpClient httpClient = HttpClients.createDefault();
-                         CloseableHttpResponse response = httpClient.execute(httpPut)) {
-                        System.out.println(EntityUtils.toString(response.getEntity()));
-                    }
+                if(String.valueOf(factura.getIdcliente()) == null || factura.getFacturado()==null || factura.getVencimiento() == null){
+                    Notification notification = new Notification(
+                            "Datos imcompletos.", 2000,
+                            Notification.Position.MIDDLE);
+                    notification.open();
+                }else {
+                    JSONObject facturaJson = new JSONObject();
+                    facturaJson.put("invoiceId",factura.getIdfactura());
+                    facturaJson.put("vendorDisplayName", factura.getCliente());
+                    facturaJson.put("date_invoice",factura.getFacturado());
+                    facturaJson.put("date_due", factura.getVencimiento());
+                    facturaJson.put("amount_untaxed", factura.getPrecio());
+                    facturaJson.put("amount_total",factura.getTotal());
+                    facturaJson.put("partner_id",factura.getIdcliente());
+                    try{
+                        String putEndpoint = "http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/updateInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+factura.getIdfactura();
+                        CloseableHttpClient httpclient = HttpClients.createDefault();
+                        HttpPut httpPut = new HttpPut(putEndpoint);
+                        httpPut.setHeader("Accept", "application/json");
+                        httpPut.setHeader("Content-type", "application/json");
+                        StringEntity params =new StringEntity(facturaJson.toString());
+                        httpPut.setEntity(params);
+                        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+                             CloseableHttpResponse response = httpClient.execute(httpPut)) {
+                            System.out.println(EntityUtils.toString(response.getEntity()));
+                        }
 
-                } catch(IOException e){
-                    e.printStackTrace();
+                    } catch(IOException e){
+                        e.printStackTrace();
+                    }
+                    Notification notification = new Notification(
+                            "Datos Actualizados.", 2000,
+                            Notification.Position.MIDDLE);
+                    notification.open();
                 }
-                Notification notification = new Notification(
-                        "Datos Actualizados.", 2000,
-                        Notification.Position.MIDDLE);
-                notification.open();
+
+
+
+
                 return factura;
             }
 
             @Override
             public void delete(Factura factura) {
                 CloseableHttpClient httpClient  = HttpClients.createDefault();
-                HttpDelete httpDelete = new HttpDelete("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/deleteInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+factura.getIdfactura());
+                HttpDelete httpDelete = new HttpDelete("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/deleteInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+factura.getIdfactura());
             try {
                 HttpResponse response = (HttpResponse) httpClient.execute(httpDelete);
             } catch (IOException e) {

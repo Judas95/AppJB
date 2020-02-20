@@ -1,18 +1,15 @@
 package org.test;
 
 
-import com.sun.source.doctree.TextTree;
-import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.applayout.AppLayout;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
+
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.PasswordField;
+
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.dom.Element;
+
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
@@ -27,13 +24,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
+
 import org.json.JSONObject;
 import org.vaadin.crudui.crud.CrudListener;
 import org.vaadin.crudui.crud.impl.GridCrud;
-import org.vaadin.flow.helper.HasUrlParameterMapping;
-import org.vaadin.flow.helper.UrlParameter;
-import org.vaadin.flow.helper.UrlParameterMapping;
+
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -70,26 +65,34 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
         TextField idfactura = new TextField();
         idfactura.setLabel("Id Factura");
         idfactura.setValue(String.valueOf(factura.getIdfactura()));
+        idfactura.setEnabled(false);
 
         TextField cliente = new TextField();
         cliente.setLabel("Cliente");
         cliente.setValue(factura.getCliente());
+        cliente.setEnabled(false);
+
 
         TextField idcliente = new TextField();
         idcliente.setLabel("Id Cliente");
         idcliente.setValue(String.valueOf(factura.getCliente()));
+        idcliente.setEnabled(false);
 
         TextField precio = new TextField();
         precio.setLabel("Precio");
         precio.setValue(String.valueOf(factura.getTotal()));
+        precio.setEnabled(false);
 
         TextField facturado = new TextField();
         facturado.setLabel("Facturado");
         facturado.setValue(String.valueOf(factura.getFacturado()));
+        facturado.setEnabled(false);
+
 
         TextField vencimiento = new TextField();
         vencimiento.setLabel("Vencimiento");
         vencimiento.setValue((String.valueOf(factura.getVencimiento())));
+        vencimiento.setEnabled(false);
 
         fl.add(idfactura, 1);
         fl.add(cliente, 1);
@@ -110,7 +113,8 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
 
             Factura factura = null;
             Client client = ClientBuilder.newClient();
-            WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/getInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+Integer.parseInt(idFactura));
+
+            WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/getInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+Integer.parseInt(idFactura));
             String s = target.request().get(String.class);
             JSONArray jsonObjectfactura = new JSONArray(s);
             client.close();
@@ -133,7 +137,7 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
             @Override
             public Collection<Producto> findAll() {
                 Client client = ClientBuilder.newClient();
-                WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/getProductsFromInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+Integer.parseInt(idFactura));
+                WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/getProductsFromInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+Integer.parseInt(idFactura));
                 String s = target.request().get(String.class);
                 System.out.println(s);
                 JSONArray product = new JSONArray(s);
@@ -154,73 +158,85 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
 
                 @Override
             public Producto add(Producto producto) {
-                try{
-                    HttpPost post = new HttpPost("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/addProductToInvoice?userId="+Integer.parseInt(algo.getObject()));
-                    JSONObject jsonObjectproducto = new JSONObject();
-                    jsonObjectproducto.put("name", producto.getDescripcion());
-                    jsonObjectproducto.put("invoice_id", idFactura);
-                    jsonObjectproducto.put("product_id", producto.getIdproducto());
-                    jsonObjectproducto.put("price_unit", producto.getPreciounidad());
-                    jsonObjectproducto.put("quantity",producto.getCantidad());
+                    if(String.valueOf(producto.getCantidad()) == null || producto.getDescripcion()==null || (String.valueOf(producto.getIdproducto())==null || (String.valueOf(producto.getPreciounidad()))==null)){
+                        Notification notification = new Notification(
+                                "Datos imcompletos.", 2000,
+                                Notification.Position.MIDDLE);
+                        notification.open();
+                    }else{try{
+                        HttpPost post = new HttpPost("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/addProductToInvoice?userId="+Integer.parseInt(algo.getObject()));
+                        JSONObject jsonObjectproducto = new JSONObject();
+                        jsonObjectproducto.put("name", producto.getDescripcion());
+                        jsonObjectproducto.put("invoice_id", idFactura);
+                        jsonObjectproducto.put("product_id", producto.getIdproducto());
+                        jsonObjectproducto.put("price_unit", producto.getPreciounidad());
+                        jsonObjectproducto.put("quantity",producto.getCantidad());
 
 
-                    post.setEntity(new StringEntity(jsonObjectproducto.toString()));
-                    post.setHeader("Content-type", "application/json");
-                    try (CloseableHttpClient httpClient = HttpClients.createDefault();
-                         CloseableHttpResponse response = httpClient.execute(post)) {
-                        System.out.println(EntityUtils.toString(response.getEntity()));
-                    } catch (ClientProtocolException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
+                        post.setEntity(new StringEntity(jsonObjectproducto.toString()));
+                        post.setHeader("Content-type", "application/json");
+                        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+                             CloseableHttpResponse response = httpClient.execute(post)) {
+                            System.out.println(EntityUtils.toString(response.getEntity()));
+                        } catch (ClientProtocolException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
+                        Notification notification = new Notification(
+                                "Producto Creado Correctamente.", 2000,
+                                Notification.Position.MIDDLE);
+                        notification.open();}
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                    Notification notification = new Notification(
-                            "Producto Creado Correctamente.", 2000,
-                            Notification.Position.MIDDLE);
-                    notification.open();
                 return producto;
             }
 
             @Override
             public Producto update(Producto producto) {
-                JSONObject facturaJson = new JSONObject();
-                facturaJson.put("name",producto.getDescripcion());
-                facturaJson.put("invoice_line_id", producto.getInvoiceLineId());
-                facturaJson.put("invoice_id",idFactura);
-                facturaJson.put("product_id",producto.getIdproducto());
-                facturaJson.put("price_unit", producto.getPreciounidad());
-                facturaJson.put("quantity", producto.getCantidad());
+                if(String.valueOf(producto.getCantidad()) == null || producto.getDescripcion()==null|| producto.getDescripcion()==null || (String.valueOf(producto.getIdproducto())==null || (String.valueOf(producto.getPreciounidad()))==null )) {
+                    Notification notification = new Notification(
+                            "Datos imcompletos.", 2000,
+                            Notification.Position.MIDDLE);
+                    notification.open();
+                }else{JSONObject facturaJson = new JSONObject();
+                        facturaJson.put("name",producto.getDescripcion());
+                        facturaJson.put("invoice_line_id", producto.getInvoiceLineId());
+                        facturaJson.put("invoice_id",idFactura);
+                        facturaJson.put("product_id",producto.getIdproducto());
+                        facturaJson.put("price_unit", producto.getPreciounidad());
+                        facturaJson.put("quantity", producto.getCantidad());
 
-                try{
-                    String putEndpoint = "http:/192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/updateProductWithinInvoice?userId="+Integer.parseInt(algo.getObject());
-                    CloseableHttpClient httpclient = HttpClients.createDefault();
-                    HttpPut httpPut = new HttpPut(putEndpoint);
-                    httpPut.setHeader("Accept", "application/json");
-                    httpPut.setHeader("Content-type", "application/json");
-                    StringEntity params =new StringEntity(facturaJson.toString());
-                    httpPut.setEntity(params);
-                    try (CloseableHttpClient httpClient = HttpClients.createDefault();
-                         CloseableHttpResponse response = httpClient.execute(httpPut)) {
-                        System.out.println(EntityUtils.toString(response.getEntity()));
-                    }
-                } catch(IOException e){
-                    e.printStackTrace();
-                }
-                Notification notification = new Notification(
-                        "Producto Actualizado Correctamente.", 2000,
-                        Notification.Position.MIDDLE);
-                notification.open();
+                        try{
+                            String putEndpoint = "http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/updateProductWithinInvoice?userId="+Integer.parseInt(algo.getObject());
+                            CloseableHttpClient httpclient = HttpClients.createDefault();
+                            HttpPut httpPut = new HttpPut(putEndpoint);
+                            httpPut.setHeader("Accept", "application/json");
+                            httpPut.setHeader("Content-type", "application/json");
+                            StringEntity params =new StringEntity(facturaJson.toString());
+                            httpPut.setEntity(params);
+                            try (CloseableHttpClient httpClient = HttpClients.createDefault();
+                                 CloseableHttpResponse response = httpClient.execute(httpPut)) {
+                                System.out.println(EntityUtils.toString(response.getEntity()));
+                            }
+                        } catch(IOException e){
+                            e.printStackTrace();
+                        }
+                        Notification notification1 = new Notification(
+                                "Producto Actualizado Correctamente.", 2000,
+                                Notification.Position.MIDDLE);
+                        notification1.open();}
+
                 return producto;
             }
 
             @Override
             public void delete(Producto producto) {
                 CloseableHttpClient httpClient  = HttpClients.createDefault();
-                HttpDelete httpDelete = new HttpDelete("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/deleteProduct?userId="+Integer.parseInt(algo.getObject())+"&invoiceLineId="+producto.getInvoiceLineId());
+                HttpDelete httpDelete = new HttpDelete("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/deleteProduct?userId="+Integer.parseInt(algo.getObject())+"&invoiceLineId="+producto.getInvoiceLineId());
                 try {
                     HttpResponse response = (HttpResponse) httpClient.execute(httpDelete);
                 } catch (IOException e) {

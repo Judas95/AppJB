@@ -1,10 +1,12 @@
 org\test\FormularioView.class
 org\test\Almacen.class
 org\test\FormularioView$1.class
+org\test\Conexion.class
 org\test\FacturasView$1.class
 org\test\Producto.class
 org\test\Clienteview.class
 org\test\Factura.class
+org\test\LoginTest.class
 org\test\Cliente.class
 org\test\FacturasView.class
 org\test\Home.class

@@ -6,6 +6,7 @@ import com.github.appreciated.app.layout.component.menu.left.builder.LeftAppMenu
 import com.github.appreciated.app.layout.component.menu.left.items.LeftHeaderItem;
 import com.github.appreciated.app.layout.component.menu.left.items.LeftNavigationItem;
 import com.github.appreciated.app.layout.component.router.AppLayoutRouterLayout;
+
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.page.Push;
@@ -21,8 +22,10 @@ import static com.github.appreciated.app.layout.entity.Section.HEADER;
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class MainAppLayout extends AppLayoutRouterLayout<LeftLayouts.LeftResponsive> implements HasUrlParameter<String > {
     static String algo;
+
     public MainAppLayout() {
-        com.vaadin.flow.component.html.Label label = new Label("CuboDoo");
+
+        com.vaadin.flow.component.html.Label label = new Label("Vicadoo");
         label.getStyle().set("marginLeft", "65px");
         label.getStyle().set("color","hsl(214, 90%, 52%)");
         label.getStyle().set("font-size", "70px");

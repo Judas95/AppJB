@@ -14,6 +14,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.Route;
+import org.apache.commons.collections.FactoryUtils;
 import org.json.JSONArray;
 import org.vaadin.flow.helper.HasUrlParameterMapping;
 import org.vaadin.flow.helper.UrlParameter;
@@ -96,7 +97,7 @@ public class Clienteview extends VerticalLayout implements HasUrlParameterMappin
 
         Cliente cliente = null;
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/customer/getCustomerById?userId="+Integer.parseInt(algo.getObject())+"&customerId="+Integer.parseInt(idcliente));
+        WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/customer/getCustomerById?userId="+Integer.parseInt(algo.getObject())+"&customerId="+Integer.parseInt(idcliente));
         String s = target.request().get(String.class);
         JSONArray jsonObjectcliente = new JSONArray(s);
         client.close();
@@ -115,19 +116,36 @@ public class Clienteview extends VerticalLayout implements HasUrlParameterMappin
     @Override
     public void setParameter(BeforeEvent beforeEvent, String s) {
         setForm(crearcliente(s));
-        //tablaproductos(s);
+        invoiceTable(s);
     }
 
-    public void listafacturadelcliente(){
-        List<Factura> facturas = new ArrayList<>();
+    private void invoiceTable(String s) {
+        List<Factura> invoiceList = new ArrayList<>();
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("");
-        String s = target.request().get(String.class);
-
-
-
-
+        WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/getInvoicesByCustomer?userId="+Integer.parseInt(algo.getObject())+"&customerId="+Integer.parseInt(s));
+        String s1 = target.request().get(String.class);
+        client.close();
+        JSONArray jsonArrayInvoice = new JSONArray(s1);
+        for (int i = 0; i < jsonArrayInvoice.length(); i++) {
+            invoiceList.add(new Factura(jsonArrayInvoice.getJSONObject(i).getInt("id"),
+                    jsonArrayInvoice.getJSONObject(i).getString("vendor_display_name"),
+                    LocalDate.parse(jsonArrayInvoice.getJSONObject(i).getString("date_invoice")),
+                    LocalDate.parse(jsonArrayInvoice.getJSONObject(i).getString("date_due")),
+                    jsonArrayInvoice.getJSONObject(i).getDouble("amount_untaxed"),
+                    jsonArrayInvoice.getJSONObject(i).getDouble("amount_total"),
+                    (Integer) jsonArrayInvoice.getJSONObject(i).getJSONArray("partner_id").get(0)));
+        }
+        Grid<Factura> invoiceGrid = new Grid<>(Factura.class);
+        invoiceGrid.setItems(invoiceList);
+        invoiceGrid.removeColumnByKey("idfactura");
+        invoiceGrid.removeColumnByKey("cliente");
+        invoiceGrid.removeColumnByKey("idcliente");
+        invoiceGrid.setColumns( "facturado", "vencimiento", "precio", "total");
+        add(invoiceGrid);
+        invoiceGrid.addItemDoubleClickListener(event-> getUI().ifPresent(ui -> ui.navigate("formulariofactura" + "/" + event.getItem().getIdfactura())));
     }
+
+
 
 
 }

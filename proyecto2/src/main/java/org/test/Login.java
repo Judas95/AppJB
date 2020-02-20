@@ -1,22 +1,19 @@
 package org.test;
 
 import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.UI;
+
 import com.vaadin.flow.component.button.Button;
 
-import com.vaadin.flow.component.charts.model.Navigation;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Image;
+
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.NativeButton;
+
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.login.LoginForm;
-import com.vaadin.flow.component.login.LoginI18n;
-import com.vaadin.flow.component.login.LoginOverlay;
+
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
@@ -24,16 +21,13 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.theme.lumo.Lumo;
-import sun.jvm.hotspot.gc.shared.Space;
 
-import javax.enterprise.event.Event;
-import javax.swing.*;
+
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import java.awt.*;
+
 
 /**
  * The main view contains a button and a click listener.
@@ -138,24 +132,32 @@ public class Login extends VerticalLayout  {
         botonsito.getStyle().set("marginLeft", "700px");
     }
 
-    public void auth(){
+    public String auth(){
         //Conexion
         com.vaadin.flow.component.html.Label fallo = new Label("Datos incorrectos");
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/authenticate?username="+userNameTextField.getValue().toString()+"&password="+passwordField.getValue().toString());
+        WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/authenticate?username="+userNameTextField.getValue().toString()+"&password="+passwordField.getValue().toString());
         String s = target.request().get(String.class);
-        System.out.println(s);
-        System.out.println(userNameTextField);
-        System.out.println(passwordField);
-
         if (Integer.parseInt(s) > 0){
             getUI().ifPresent(ui -> ui.navigate("MainView"+"/"+s));
         }else{
             Notification notification = new Notification(
-            "Datos incorrectos.", 2000,
-            Notification.Position.MIDDLE);
+                    "Datos incorrectos.", 2000,
+                    Notification.Position.MIDDLE);
             notification.open();
         }
+        return s;
     }
+
+    public String authtest(String usuario, String contraseña){
+        //Conexion
+        com.vaadin.flow.component.html.Label fallo = new Label("Datos incorrectos");
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/authenticate?username="+usuario+"&password="+contraseña);
+        String s = target.request().get(String.class);
+
+        return s;
+    }
+
 }
 

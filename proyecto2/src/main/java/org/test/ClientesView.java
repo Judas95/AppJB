@@ -1,12 +1,9 @@
 package org.test;
 
-import com.github.appreciated.card.Card;
+
 import com.github.appreciated.card.action.ActionButton;
 import com.github.appreciated.card.action.Actions;
-import com.github.appreciated.card.label.PrimaryLabel;
-import com.github.appreciated.card.label.SecondaryLabel;
-import com.github.appreciated.card.label.TitleLabel;
-import com.vaadin.flow.component.button.Button;
+
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
@@ -17,19 +14,17 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
-import org.apache.commons.io.FileUtils;
-import org.json.JSONArray;
-import sun.jvm.hotspot.gc.shared.Space;
-import sun.tools.jconsole.Plotter;
 
-import javax.imageio.ImageIO;
+import org.json.JSONArray;
+
+
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import java.awt.*;
+
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +43,11 @@ public class ClientesView extends VerticalLayout {
     public ClientesView() throws IOException {
     Logo();
     Client client = ClientBuilder.newClient();
-    WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/customer/getCustomers?userId=2");
+    WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/customer/getCustomers?userId=2");
     String s = target.request().get(String.class);
     JSONArray jsonArray = new JSONArray(s);
     client.close();
     crearusuarios(jsonArray);
-
     }
 
     public void Logo (){
