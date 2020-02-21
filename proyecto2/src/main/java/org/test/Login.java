@@ -42,11 +42,16 @@ import javax.ws.rs.client.WebTarget;
 public class Login extends VerticalLayout  {
     TextField userNameTextField;
     PasswordField passwordField;
+    Button bot = new Button("Ampliar");
+    boolean change = false;
+    com.vaadin.flow.component.html.Label correo;
+    com.vaadin.flow.component.html.Label contra;
 
     public Login() {
+        bot.addClickListener(e->changeFontSize());
         SetMainLogo();
         SetLoginComponents();
-        SetSecondaryLogo();
+
     }
 
     public void SetMainLogo(){
@@ -60,25 +65,14 @@ public class Login extends VerticalLayout  {
         add(Logo1);
     }
 
-    public void SetSecondaryLogo(){
-        Icon logoV = new Icon(VaadinIcon.FORWARD);
-        logoV.getStyle().set("cursor", "pointer");
-        logoV.setColor("hsl(214, 90%, 52%)");
-        logoV.setSize("3%");
-        logoV.addClickListener(
-                event -> getUI().ifPresent(ui -> ui.navigate("home"+"/"+8)));
-
-        Div logoVV = new Div();
-        logoVV.add(logoV);
-        add(logoVV);
-        logoVV.getStyle().set("marginLeft", "700px");
-    }
 
     public void SetLoginComponents(){
         userNameTextField = new TextField();
         userNameTextField.getElement().setAttribute("name", "username"); //
         passwordField = new PasswordField();
         passwordField.getElement().setAttribute("name", "password"); //
+        passwordField.getStyle().set("font-size","15px");
+        userNameTextField.getStyle().set("font-size","15px");
         Button submitButton = new Button("Login");
         submitButton.addClickShortcut(Key.ENTER);
         submitButton.addClickListener(e->auth());
@@ -101,8 +95,8 @@ public class Login extends VerticalLayout  {
 
         setClassName("login-view");
 
-        com.vaadin.flow.component.html.Label correo = new Label("Correo Electrónico");
-        com.vaadin.flow.component.html.Label contra = new Label("Contraseña");
+         correo = new Label("Correo Electrónico");
+         contra = new Label("Contraseña");
 
         Div pedirnombre = new Div();
         pedirnombre.add(correo);
@@ -126,31 +120,51 @@ public class Login extends VerticalLayout  {
         datopass.getStyle().set("marginLeft", "700px");
         datopass.getStyle().set("font-size", "20px");
 
+        correo.getStyle().set("font-size","15px");
+        contra.getStyle().set("font-size","15px");
+
         Div botonsito = new Div();
         botonsito.add(submitButton);
         add(botonsito);
         botonsito.getStyle().set("marginLeft", "700px");
+
+        Div buttonDiv = new Div();
+        buttonDiv.add(bot);
+        buttonDiv.getStyle().set("marginLeft", "700px");
+        buttonDiv.getStyle().set("marginTop", "30px");
+        add(buttonDiv);
     }
 
     public String auth(){
         //Conexion
-        com.vaadin.flow.component.html.Label fallo = new Label("Datos incorrectos");
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/authenticate?username="+userNameTextField.getValue().toString()+"&password="+passwordField.getValue().toString());
-        String s = target.request().get(String.class);
-        if (Integer.parseInt(s) > 0){
-            getUI().ifPresent(ui -> ui.navigate("MainView"+"/"+s));
-        }else{
+        String s = null;
+        if(userNameTextField.getValue()==null || passwordField.getValue()==null){
             Notification notification = new Notification(
                     "Datos incorrectos.", 2000,
                     Notification.Position.MIDDLE);
             notification.open();
+        }else{
+            com.vaadin.flow.component.html.Label fallo = new Label("Datos incorrectos");
+            Client client = ClientBuilder.newClient();
+            WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/authenticate?username="+userNameTextField.getValue().toString()+"&password="+passwordField.getValue().toString());
+            s = target.request().get(String.class);
+            if (Integer.parseInt(s) > 0){
+                String finalS = s;
+                getUI().ifPresent(ui -> ui.navigate("MainView"+"/"+ finalS));
+            }else{
+                Notification notification = new Notification(
+                        "Datos incorrectos.", 2000,
+                        Notification.Position.MIDDLE);
+                notification.open();
+            }
         }
+
         return s;
     }
 
     public String authtest(String usuario, String contraseña){
         //Conexion
+
         com.vaadin.flow.component.html.Label fallo = new Label("Datos incorrectos");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/authenticate?username="+usuario+"&password="+contraseña);
@@ -158,6 +172,28 @@ public class Login extends VerticalLayout  {
 
         return s;
     }
+    public void changeFontSize(){
+
+        if(change){
+            userNameTextField.getStyle().set("font-size","15px");
+            passwordField.getStyle().set("font-size","15px");
+            correo.getStyle().set("font-size","15px");
+            contra.getStyle().set("font-size","15px");
+            bot.setText("Ampliar");
+            change = false;
+        }else {
+            userNameTextField.getStyle().set("font-size","30px");
+            passwordField.getStyle().set("font-size","30px");
+            correo.getStyle().set("font-size","30px");
+            contra.getStyle().set("font-size","30px");
+            change = true;
+            bot.setText("Minimizar");
+        }
+
+
+
+
+}
 
 }
 

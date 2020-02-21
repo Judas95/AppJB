@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9a811863-32c5-4022-b648-87fba18e91fe">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="3"/>
+	<queryString>
+		<![CDATA[Select * from res_partner]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="company_id" class="java.lang.Integer"/>
+	<field name="create_date" class="java.sql.Timestamp"/>
+	<field name="display_name" class="java.lang.String">
+		<fieldDescription><![CDATA[Display Name]]></fieldDescription>
+	</field>
+	<field name="date" class="java.sql.Date">
+		<fieldDescription><![CDATA[Date]]></fieldDescription>
+	</field>
+	<field name="title" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Title]]></fieldDescription>
+	</field>
+	<field name="parent_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Related Company]]></fieldDescription>
+	</field>
+	<field name="ref" class="java.lang.String">
+		<fieldDescription><![CDATA[Internal Reference]]></fieldDescription>
+	</field>
+	<field name="lang" class="java.lang.String">
+		<fieldDescription><![CDATA[Language]]></fieldDescription>
+	</field>
+	<field name="tz" class="java.lang.String">
+		<fieldDescription><![CDATA[Timezone]]></fieldDescription>
+	</field>
+	<field name="user_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Salesperson]]></fieldDescription>
+	</field>
+	<field name="vat" class="java.lang.String">
+		<fieldDescription><![CDATA[Tax ID]]></fieldDescription>
+	</field>
+	<field name="website" class="java.lang.String">
+		<fieldDescription><![CDATA[Website]]></fieldDescription>
+	</field>
+	<field name="comment" class="java.lang.String">
+		<fieldDescription><![CDATA[Notes]]></fieldDescription>
+	</field>
+	<field name="credit_limit" class="java.lang.Double">
+		<fieldDescription><![CDATA[Credit Limit]]></fieldDescription>
+	</field>
+	<field name="barcode" class="java.lang.String">
+		<fieldDescription><![CDATA[Barcode]]></fieldDescription>
+	</field>
+	<field name="active" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[Active]]></fieldDescription>
+	</field>
+	<field name="customer" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[Is a Customer]]></fieldDescription>
+	</field>
+	<field name="supplier" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[Is a Vendor]]></fieldDescription>
+	</field>
+	<field name="employee" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[Employee]]></fieldDescription>
+	</field>
+	<field name="function" class="java.lang.String">
+		<fieldDescription><![CDATA[Job Position]]></fieldDescription>
+	</field>
+	<field name="type" class="java.lang.String">
+		<fieldDescription><![CDATA[Address Type]]></fieldDescription>
+	</field>
+	<field name="street" class="java.lang.String">
+		<fieldDescription><![CDATA[Street]]></fieldDescription>
+	</field>
+	<field name="street2" class="java.lang.String">
+		<fieldDescription><![CDATA[Street2]]></fieldDescription>
+	</field>
+	<field name="zip" class="java.lang.String">
+		<fieldDescription><![CDATA[Zip]]></fieldDescription>
+	</field>
+	<field name="city" class="java.lang.String">
+		<fieldDescription><![CDATA[City]]></fieldDescription>
+	</field>
+	<field name="state_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[State]]></fieldDescription>
+	</field>
+	<field name="country_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Country]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[Email]]></fieldDescription>
+	</field>
+	<field name="phone" class="java.lang.String">
+		<fieldDescription><![CDATA[Phone]]></fieldDescription>
+	</field>
+	<field name="mobile" class="java.lang.String">
+		<fieldDescription><![CDATA[Mobile]]></fieldDescription>
+	</field>
+	<field name="is_company" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[Is a Company]]></fieldDescription>
+	</field>
+	<field name="industry_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Industry]]></fieldDescription>
+	</field>
+	<field name="color" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Color Index]]></fieldDescription>
+	</field>
+	<field name="partner_share" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[Share Partner]]></fieldDescription>
+	</field>
+	<field name="commercial_partner_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Commercial Entity]]></fieldDescription>
+	</field>
+	<field name="commercial_company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[Company Name Entity]]></fieldDescription>
+	</field>
+	<field name="company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[Company Name]]></fieldDescription>
+	</field>
+	<field name="create_uid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Created by]]></fieldDescription>
+	</field>
+	<field name="write_uid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Last Updated by]]></fieldDescription>
+	</field>
+	<field name="write_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[Last Updated on]]></fieldDescription>
+	</field>
+	<field name="message_main_attachment_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Main Attachment]]></fieldDescription>
+	</field>
+	<field name="message_bounce" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Bounce]]></fieldDescription>
+	</field>
+	<field name="signup_token" class="java.lang.String">
+		<fieldDescription><![CDATA[Signup Token]]></fieldDescription>
+	</field>
+	<field name="signup_type" class="java.lang.String">
+		<fieldDescription><![CDATA[Signup Token Type]]></fieldDescription>
+	</field>
+	<field name="signup_expiration" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[Signup Expiration]]></fieldDescription>
+	</field>
+	<field name="partner_gid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Company database ID]]></fieldDescription>
+	</field>
+	<field name="additional_info" class="java.lang.String">
+		<fieldDescription><![CDATA[Additional info]]></fieldDescription>
+	</field>
+	<field name="debit_limit" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Payable Limit]]></fieldDescription>
+	</field>
+	<field name="last_time_entries_checked" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[Latest Invoices & Payments Matching Date]]></fieldDescription>
+	</field>
+	<field name="invoice_warn" class="java.lang.String">
+		<fieldDescription><![CDATA[Invoice]]></fieldDescription>
+	</field>
+	<field name="invoice_warn_msg" class="java.lang.String">
+		<fieldDescription><![CDATA[Message for Invoice]]></fieldDescription>
+	</field>
+	<field name="picking_warn" class="java.lang.String">
+		<fieldDescription><![CDATA[Stock Picking]]></fieldDescription>
+	</field>
+	<field name="picking_warn_msg" class="java.lang.String">
+		<fieldDescription><![CDATA[Message for Stock Picking]]></fieldDescription>
+	</field>
+	<field name="purchase_warn" class="java.lang.String">
+		<fieldDescription><![CDATA[Purchase Order]]></fieldDescription>
+	</field>
+	<field name="purchase_warn_msg" class="java.lang.String">
+		<fieldDescription><![CDATA[Message for Purchase Order]]></fieldDescription>
+	</field>
+	<field name="team_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Sales Team]]></fieldDescription>
+	</field>
+	<field name="sale_warn" class="java.lang.String">
+		<fieldDescription><![CDATA[Sales Warnings]]></fieldDescription>
+	</field>
+	<field name="sale_warn_msg" class="java.lang.String">
+		<fieldDescription><![CDATA[Message for Sales Order]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="187" y="40" width="198" height="39" uuid="96ec4e20-ca36-4732-9a3b-909aaa8c014d"/>
+				<textElement>
+					<font size="30"/>
+				</textElement>
+				<text><![CDATA[Lista Clientes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="0" width="112" height="40" forecolor="#0000FF" uuid="cc915f89-0515-4a10-aa4a-f8851c3c20e8"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Vicadoo]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="36" y="2" width="100" height="20" uuid="e61d738e-8e7f-42d4-a020-168ad0b10207"/>
+				<text><![CDATA[name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="2" width="100" height="20" uuid="409df356-07da-435f-befe-a6309d9dbcaa"/>
+				<text><![CDATA[Website]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="100" height="20" uuid="15ab7dc8-6ec8-4a06-b23a-b98c490048a6"/>
+				<text><![CDATA[Street]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="36" y="19" width="100" height="20" uuid="0b274f9e-47cc-4d42-ac01-0259f626cd24"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="19" width="100" height="20" uuid="9b1546e5-494c-41e7-949a-7770a9188829"/>
+				<textFieldExpression><![CDATA[$F{website}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="19" width="100" height="20" uuid="b5dc1e44-730b-4e1d-8053-7b35dceaaba3"/>
+				<textFieldExpression><![CDATA[$F{street}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

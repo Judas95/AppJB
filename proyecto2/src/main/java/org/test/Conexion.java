@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
-    String url = "jdbc:mysql://localhost:3306/factura_db?serverTimezone=UTC"; //
-    String user = "root";
+    String url = "jdbc:postgresql://192.168.43.167:5432/ProyectoEmpresa?serverTimezone=UTC"; //
+    String user = "postgres";
     String pass = "1234";
     Connection conn;
 
@@ -14,7 +14,7 @@ public class Conexion {
     public Connection conexionmysql (){
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url, user, pass);
             System.out.println("Connection Successful");
 

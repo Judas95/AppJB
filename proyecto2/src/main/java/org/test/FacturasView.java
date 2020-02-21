@@ -13,6 +13,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import com.vaadin.flow.router.Route;
 
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -32,13 +35,13 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Route(value = "facturas", layout = MainAppLayout.class)
 public class FacturasView extends VerticalLayout {
@@ -47,6 +50,8 @@ public class FacturasView extends VerticalLayout {
     public FacturasView() {
         logofactura();
         facturalist();
+        botoninforme();
+        botonproductos();
     }
 
     public void facturalist (){
@@ -196,6 +201,72 @@ public class FacturasView extends VerticalLayout {
         divtexto.add(logoV);
         add(divtexto);
     }
+    public void botoninforme(){
+        Button boton = new Button ("Informe de Facturas");
+        boton.addClickListener(e-> {
+            try {
+                informar();
+            } catch (JRException ex) {
+                ex.printStackTrace();
+            }
+        });
+        Div botondiv = new Div();
+        botondiv.getStyle().set("marginLeft", "530px");
+        botondiv.add(boton);
+        botondiv.getStyle().set("marginTop","20px");
+        add(botondiv);
+    }
+    public boolean informar() throws JRException {
+        boolean payaso =false;
+        java.io.InputStream inputStream = null;
+        Conexion conexion1 = new Conexion();
+        try {
+            inputStream = new FileInputStream("src/main/reportito.jrxml"); //
+            Map parameters = new HashMap();
+            JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,conexion1.conexionmysql());
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "src/factura.pdf");
+            payaso =true;
+        } catch (FileNotFoundException ex) {
+            payaso =false;
+        }
+        return  payaso;
+    }
+    public boolean product() throws JRException {
+        boolean payaso =false;
+        java.io.InputStream inputStream = null;
+        Conexion conexion1 = new Conexion();
+        try {
+            inputStream = new FileInputStream("src/main/producto.jrxml"); //
+            Map parameters = new HashMap();
+            JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,conexion1.conexionmysql());
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "src/productos.pdf");
+            payaso =true;
+        } catch (FileNotFoundException ex) {
+            payaso =false;
+        }
+        return  payaso;
+    }
+    public void botonproductos(){
+        Button boton = new Button ("Informe de Productos");
+        boton.addClickListener(e-> {
+            try {
+                product();
+            } catch (JRException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        Div botondiv = new Div();
+        botondiv.getStyle().set("marginLeft", "530px");
+        botondiv.add(boton);
+        botondiv.getStyle().set("marginTop","20px");
+        add(botondiv);
+    }
+
 
 
 

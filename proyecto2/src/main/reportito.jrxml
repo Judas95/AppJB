@@ -1,20 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e7c52435-c686-4e41-94f8-4fa0b940dbd8">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="277"/>
+	<property name="ireport.y" value="2106"/>
 	<subDataset name="dataset1" uuid="9ebd5c65-68aa-4d1c-8b97-17cf1715f1ef"/>
 	<queryString>
-		<![CDATA[Select * from factura_db.factura;]]>
+		<![CDATA[Select * from account_invoice]]>
 	</queryString>
-	<field name="idfacturas" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="number" class="java.lang.String">
+		<fieldDescription><![CDATA[Number]]></fieldDescription>
 	</field>
-	<field name="cliente" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[Reference/Description]]></fieldDescription>
 	</field>
-	<field name="precio" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="create_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[Created on]]></fieldDescription>
+	</field>
+	<field name="partner_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Partner]]></fieldDescription>
+	</field>
+	<field name="amount_total_signed" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Total in Invoice Currency]]></fieldDescription>
+	</field>
+	<field name="date" class="java.sql.Date">
+		<fieldDescription><![CDATA[Accounting Date]]></fieldDescription>
+	</field>
+	<field name="create_uid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Created by]]></fieldDescription>
+	</field>
+	<field name="vendor_bill_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Vendor Bill]]></fieldDescription>
+	</field>
+	<field name="fiscal_position_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Fiscal Position]]></fieldDescription>
+	</field>
+	<field name="currency_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Currency]]></fieldDescription>
+	</field>
+	<field name="move_name" class="java.lang.String">
+		<fieldDescription><![CDATA[Journal Entry Name]]></fieldDescription>
+	</field>
+	<field name="origin" class="java.lang.String">
+		<fieldDescription><![CDATA[Source Document]]></fieldDescription>
+	</field>
+	<field name="access_token" class="java.lang.String">
+		<fieldDescription><![CDATA[Security Token]]></fieldDescription>
+	</field>
+	<field name="team_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Sales Team]]></fieldDescription>
+	</field>
+	<field name="residual_signed" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Amount Due in Invoice Currency]]></fieldDescription>
+	</field>
+	<field name="vendor_display_name" class="java.lang.String">
+		<fieldDescription><![CDATA[Vendor Display Name]]></fieldDescription>
+	</field>
+	<field name="comment" class="java.lang.String">
+		<fieldDescription><![CDATA[Additional Information]]></fieldDescription>
+	</field>
+	<field name="residual_company_signed" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Amount Due in Company Currency]]></fieldDescription>
+	</field>
+	<field name="refund_invoice_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Invoice for which this invoice is the credit note]]></fieldDescription>
+	</field>
+	<field name="source_email" class="java.lang.String">
+		<fieldDescription><![CDATA[Source Email]]></fieldDescription>
+	</field>
+	<field name="write_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[Last Updated on]]></fieldDescription>
+	</field>
+	<field name="incoterms_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Incoterms]]></fieldDescription>
+	</field>
+	<field name="amount_total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Total]]></fieldDescription>
+	</field>
+	<field name="purchase_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Add Purchase Order]]></fieldDescription>
+	</field>
+	<field name="amount_tax" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Tax]]></fieldDescription>
+	</field>
+	<field name="date_invoice" class="java.sql.Date">
+		<fieldDescription><![CDATA[Invoice Date]]></fieldDescription>
+	</field>
+	<field name="state" class="java.lang.String">
+		<fieldDescription><![CDATA[Status]]></fieldDescription>
+	</field>
+	<field name="account_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Account]]></fieldDescription>
+	</field>
+	<field name="incoterm_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Incoterm]]></fieldDescription>
+	</field>
+	<field name="sent" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[Sent]]></fieldDescription>
+	</field>
+	<field name="partner_bank_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Bank Account]]></fieldDescription>
+	</field>
+	<field name="company_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Company]]></fieldDescription>
+	</field>
+	<field name="write_uid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Last Updated by]]></fieldDescription>
+	</field>
+	<field name="message_main_attachment_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Main Attachment]]></fieldDescription>
+	</field>
+	<field name="commercial_partner_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Commercial Entity]]></fieldDescription>
+	</field>
+	<field name="payment_term_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Payment Terms]]></fieldDescription>
+	</field>
+	<field name="partner_shipping_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Delivery Address]]></fieldDescription>
+	</field>
+	<field name="move_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Journal Entry]]></fieldDescription>
+	</field>
+	<field name="user_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Salesperson]]></fieldDescription>
+	</field>
+	<field name="type" class="java.lang.String">
+		<fieldDescription><![CDATA[Type]]></fieldDescription>
+	</field>
+	<field name="reference" class="java.lang.String">
+		<fieldDescription><![CDATA[Payment Ref.]]></fieldDescription>
+	</field>
+	<field name="vendor_bill_purchase_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Auto-Complete]]></fieldDescription>
+	</field>
+	<field name="date_due" class="java.sql.Date">
+		<fieldDescription><![CDATA[Due Date]]></fieldDescription>
+	</field>
+	<field name="reconciled" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[Paid/Reconciled]]></fieldDescription>
+	</field>
+	<field name="amount_untaxed_signed" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Untaxed Amount in Company Currency]]></fieldDescription>
+	</field>
+	<field name="journal_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Journal]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="amount_untaxed" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Untaxed Amount]]></fieldDescription>
+	</field>
+	<field name="amount_total_company_signed" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Total in Company Currency]]></fieldDescription>
+	</field>
+	<field name="residual" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Amount Due]]></fieldDescription>
+	</field>
+	<field name="cash_rounding_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Cash Rounding Method]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -41,7 +183,7 @@
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="76" splitType="Stretch">
+		<band height="75" splitType="Stretch">
 			<staticText>
 				<reportElement x="93" y="14" width="100" height="20" uuid="e6fbaa09-bc68-4adb-a8da-e515ca21303b"/>
 				<text><![CDATA[Cliente]]></text>
@@ -50,20 +192,17 @@
 				<reportElement x="330" y="14" width="100" height="20" uuid="256de6d0-b0b5-4c5e-b3ef-d1569717e053"/>
 				<text><![CDATA[Precio]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement mode="Transparent" x="71" y="0" width="389" height="38" uuid="8a5fbe3a-296a-415c-8f20-ccb3c602fc7b"/>
-			</rectangle>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="125" splitType="Stretch">
 			<textField>
-				<reportElement x="93" y="0" width="100" height="20" uuid="d84b4c20-53c9-466b-b9ea-0cc7b1790b56"/>
-				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+				<reportElement x="93" y="20" width="175" height="20" uuid="70a38cdc-8fa9-4908-933e-407f67290c1f"/>
+				<textFieldExpression><![CDATA[$F{vendor_display_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="330" y="0" width="100" height="20" uuid="9a6209cc-55f6-44f2-95df-927cb11528aa"/>
-				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+				<reportElement x="330" y="20" width="100" height="20" uuid="61f5ce0d-bde9-443e-8cd6-6d83a4b10a57"/>
+				<textFieldExpression><![CDATA[$F{amount_total}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

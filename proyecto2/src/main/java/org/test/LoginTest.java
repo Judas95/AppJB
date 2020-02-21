@@ -18,7 +18,7 @@ class LoginTest {
 
     @Test
     void openHelp() throws JRException {
-        Home test2 = new Home();
+        FacturasView test2 = new FacturasView();
         boolean actual = test2.informar();
         boolean expect = true;
         assertEquals(expect,actual);

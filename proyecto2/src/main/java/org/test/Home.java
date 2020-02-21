@@ -36,20 +36,11 @@ Button bot1 = new Button();
         Imagen();
         Texto();
         video();
-        botoninforme();
+        helpo();
 
 
     }
-
-    public void botoninforme(){
-        Button boton = new Button ("Informe de Facturas");
-        boton.addClickListener(e-> {
-            try {
-                informar();
-            } catch (JRException ex) {
-                ex.printStackTrace();
-            }
-        });
+    private void helpo(){
         Div botonhelp = new Div();
         Button bot = new Button("help");
         bot.addClickListener(e->ayudar());
@@ -58,12 +49,8 @@ Button bot1 = new Button();
         botonhelp.getStyle().set("marginTop","50px");
         add(botonhelp);
 
-        Div botondiv = new Div();
-        botondiv.getStyle().set("marginLeft", "530px");
-        botondiv.add(boton);
-        botondiv.getStyle().set("marginTop","20px");
-        add(botondiv);
     }
+
 
 
     public void Home (){
@@ -103,17 +90,37 @@ Button bot1 = new Button();
         add(divlink);
     }
 
-    public boolean informar() throws JRException {
+
+
+    public boolean product() throws JRException {
         boolean payaso =false;
         java.io.InputStream inputStream = null;
         Conexion conexion1 = new Conexion();
         try {
-            inputStream = new FileInputStream("src/main/reportito.jrxml"); //
+            inputStream = new FileInputStream("src/main/producto.jrxml"); //
             Map parameters = new HashMap();
             JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
             JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,conexion1.conexionmysql());
-            JasperExportManager.exportReportToPdfFile(jasperPrint, "src/factura.pdf");
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "src/productos.pdf");
+            payaso =true;
+        } catch (FileNotFoundException ex) {
+            payaso =false;
+        }
+        return  payaso;
+    }
+
+    public boolean client() throws JRException {
+        boolean payaso =false;
+        java.io.InputStream inputStream = null;
+        Conexion conexion1 = new Conexion();
+        try {
+            inputStream = new FileInputStream("src/main/clientes.jrxml"); //
+            Map parameters = new HashMap();
+            JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,conexion1.conexionmysql());
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "src/clientes.pdf");
             payaso =true;
         } catch (FileNotFoundException ex) {
             payaso =false;

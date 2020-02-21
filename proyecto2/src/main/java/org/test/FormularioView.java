@@ -51,8 +51,10 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
     FormLayout fl = new FormLayout();
 
     Button botonbackpage = new Button("Back");
-
+    Button bot = new Button("Back");
+    TextField cliente;
     public FormularioView() {
+
         botonbackpage.addClickListener(e -> backpage());
         this.add(botonbackpage);
 
@@ -67,15 +69,16 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
         idfactura.setValue(String.valueOf(factura.getIdfactura()));
         idfactura.setEnabled(false);
 
-        TextField cliente = new TextField();
+        cliente = new TextField();
         cliente.setLabel("Cliente");
         cliente.setValue(factura.getCliente());
         cliente.setEnabled(false);
 
 
+
         TextField idcliente = new TextField();
         idcliente.setLabel("Id Cliente");
-        idcliente.setValue(String.valueOf(factura.getCliente()));
+        idcliente.setValue(String.valueOf(factura.getIdcliente()));
         idcliente.setEnabled(false);
 
         TextField precio = new TextField();
@@ -93,6 +96,8 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
         vencimiento.setLabel("Vencimiento");
         vencimiento.setValue((String.valueOf(factura.getVencimiento())));
         vencimiento.setEnabled(false);
+
+
 
         fl.add(idfactura, 1);
         fl.add(cliente, 1);
