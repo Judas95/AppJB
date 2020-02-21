@@ -136,7 +136,7 @@ public class Login extends VerticalLayout  {
         //Conexion
         com.vaadin.flow.component.html.Label fallo = new Label("Datos incorrectos");
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/authenticate?username="+userNameTextField.getValue().toString()+"&password="+passwordField.getValue().toString());
+        WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/authenticate?username="+userNameTextField.getValue().toString()+"&password="+passwordField.getValue().toString());
         String s = target.request().get(String.class);
         if (Integer.parseInt(s) > 0){
             getUI().ifPresent(ui -> ui.navigate("MainView"+"/"+s));
@@ -153,7 +153,7 @@ public class Login extends VerticalLayout  {
         //Conexion
         com.vaadin.flow.component.html.Label fallo = new Label("Datos incorrectos");
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/authenticate?username="+usuario+"&password="+contraseña);
+        WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/authenticate?username="+usuario+"&password="+contraseña);
         String s = target.request().get(String.class);
 
         return s;

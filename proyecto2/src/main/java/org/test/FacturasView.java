@@ -59,7 +59,7 @@ public class FacturasView extends VerticalLayout {
             @Override
             public Collection<Factura> findAll() {
                 Client client = ClientBuilder.newClient();
-                WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/getInvoices?userId="+Integer.parseInt(algo.getObject()));
+                WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/getInvoices?userId="+Integer.parseInt(algo.getObject()));
                 String s = target.request().get(String.class);
                 JSONArray factur = new JSONArray(s);
                 client.close();
@@ -84,7 +84,7 @@ public class FacturasView extends VerticalLayout {
                         Notification.Position.MIDDLE);
                 notification.open();
             }else {try{
-                HttpPost post = new HttpPost("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/createInvoice?userId="+Integer.parseInt(algo.getObject()));
+                HttpPost post = new HttpPost("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/createInvoice?userId="+Integer.parseInt(algo.getObject()));
                 JSONObject jsonObjectfactura = new JSONObject();
                 jsonObjectfactura.put("invoiceId", factura.getIdfactura());
                 jsonObjectfactura.put("vendorDisplayName", factura.getCliente());
@@ -134,7 +134,7 @@ public class FacturasView extends VerticalLayout {
                     facturaJson.put("amount_total",factura.getTotal());
                     facturaJson.put("partner_id",factura.getIdcliente());
                     try{
-                        String putEndpoint = "http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/updateInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+factura.getIdfactura();
+                        String putEndpoint = "http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/updateInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+factura.getIdfactura();
                         CloseableHttpClient httpclient = HttpClients.createDefault();
                         HttpPut httpPut = new HttpPut(putEndpoint);
                         httpPut.setHeader("Accept", "application/json");
@@ -164,7 +164,7 @@ public class FacturasView extends VerticalLayout {
             @Override
             public void delete(Factura factura) {
                 CloseableHttpClient httpClient  = HttpClients.createDefault();
-                HttpDelete httpDelete = new HttpDelete("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/deleteInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+factura.getIdfactura());
+                HttpDelete httpDelete = new HttpDelete("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/deleteInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+factura.getIdfactura());
             try {
                 HttpResponse response = (HttpResponse) httpClient.execute(httpDelete);
             } catch (IOException e) {

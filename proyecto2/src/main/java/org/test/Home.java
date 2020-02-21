@@ -122,7 +122,7 @@ Button bot1 = new Button();
     }
 
     public void ayudar(){
-            getUI().get().getPage().open("http://192.168.203.30:8080/html/Home.html");
+            getUI().get().getPage().open("http://192.168.43.182:8080/html/Home.html");
 }
 }
 

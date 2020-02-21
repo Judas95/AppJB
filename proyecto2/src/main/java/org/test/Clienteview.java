@@ -97,7 +97,7 @@ public class Clienteview extends VerticalLayout implements HasUrlParameterMappin
 
         Cliente cliente = null;
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/customer/getCustomerById?userId="+Integer.parseInt(algo.getObject())+"&customerId="+Integer.parseInt(idcliente));
+        WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/customer/getCustomerById?userId="+Integer.parseInt(algo.getObject())+"&customerId="+Integer.parseInt(idcliente));
         String s = target.request().get(String.class);
         JSONArray jsonObjectcliente = new JSONArray(s);
         client.close();
@@ -122,7 +122,7 @@ public class Clienteview extends VerticalLayout implements HasUrlParameterMappin
     private void invoiceTable(String s) {
         List<Factura> invoiceList = new ArrayList<>();
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/getInvoicesByCustomer?userId="+Integer.parseInt(algo.getObject())+"&customerId="+Integer.parseInt(s));
+        WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/getInvoicesByCustomer?userId="+Integer.parseInt(algo.getObject())+"&customerId="+Integer.parseInt(s));
         String s1 = target.request().get(String.class);
         client.close();
         JSONArray jsonArrayInvoice = new JSONArray(s1);

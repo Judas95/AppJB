@@ -114,7 +114,7 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
             Factura factura = null;
             Client client = ClientBuilder.newClient();
 
-            WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/getInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+Integer.parseInt(idFactura));
+            WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/invoice/getInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+Integer.parseInt(idFactura));
             String s = target.request().get(String.class);
             JSONArray jsonObjectfactura = new JSONArray(s);
             client.close();
@@ -137,7 +137,7 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
             @Override
             public Collection<Producto> findAll() {
                 Client client = ClientBuilder.newClient();
-                WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/getProductsFromInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+Integer.parseInt(idFactura));
+                WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/getProductsFromInvoice?userId="+Integer.parseInt(algo.getObject())+"&invoiceId="+Integer.parseInt(idFactura));
                 String s = target.request().get(String.class);
                 System.out.println(s);
                 JSONArray product = new JSONArray(s);
@@ -164,7 +164,7 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
                                 Notification.Position.MIDDLE);
                         notification.open();
                     }else{try{
-                        HttpPost post = new HttpPost("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/addProductToInvoice?userId="+Integer.parseInt(algo.getObject()));
+                        HttpPost post = new HttpPost("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/addProductToInvoice?userId="+Integer.parseInt(algo.getObject()));
                         JSONObject jsonObjectproducto = new JSONObject();
                         jsonObjectproducto.put("name", producto.getDescripcion());
                         jsonObjectproducto.put("invoice_id", idFactura);
@@ -211,7 +211,7 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
                         facturaJson.put("quantity", producto.getCantidad());
 
                         try{
-                            String putEndpoint = "http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/updateProductWithinInvoice?userId="+Integer.parseInt(algo.getObject());
+                            String putEndpoint = "http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/updateProductWithinInvoice?userId="+Integer.parseInt(algo.getObject());
                             CloseableHttpClient httpclient = HttpClients.createDefault();
                             HttpPut httpPut = new HttpPut(putEndpoint);
                             httpPut.setHeader("Accept", "application/json");
@@ -236,7 +236,7 @@ public class FormularioView extends VerticalLayout implements HasUrlParameter<St
             @Override
             public void delete(Producto producto) {
                 CloseableHttpClient httpClient  = HttpClients.createDefault();
-                HttpDelete httpDelete = new HttpDelete("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/deleteProduct?userId="+Integer.parseInt(algo.getObject())+"&invoiceLineId="+producto.getInvoiceLineId());
+                HttpDelete httpDelete = new HttpDelete("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/product/deleteProduct?userId="+Integer.parseInt(algo.getObject())+"&invoiceLineId="+producto.getInvoiceLineId());
                 try {
                     HttpResponse response = (HttpResponse) httpClient.execute(httpDelete);
                 } catch (IOException e) {

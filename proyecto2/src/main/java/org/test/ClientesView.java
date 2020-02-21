@@ -43,7 +43,7 @@ public class ClientesView extends VerticalLayout {
     public ClientesView() throws IOException {
     Logo();
     Client client = ClientBuilder.newClient();
-    WebTarget target = client.target("http://192.168.203.30:8080/OdooConnection-0.0.1-SNAPSHOT/rest/customer/getCustomers?userId=2");
+    WebTarget target = client.target("http://192.168.43.182:8080/OdooConnection-0.0.1-SNAPSHOT/rest/customer/getCustomers?userId=2");
     String s = target.request().get(String.class);
     JSONArray jsonArray = new JSONArray(s);
     client.close();
