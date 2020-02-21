@@ -47,14 +47,13 @@ public class FacturasView extends VerticalLayout {
     public FacturasView() {
         logofactura();
         facturalist();
-        botondetalles();
     }
 
     public void facturalist (){
          facturas = new GridCrud<>(Factura.class);
          facturas.getGrid().removeColumnByKey("idfactura");
          facturas.getCrudFormFactory().setDisabledProperties("idfactura","cliente","precio","total");
-
+         facturas.getGrid().addItemDoubleClickListener(event-> getUI().ifPresent(ui -> ui.navigate("formulariofactura" + "/" + event.getItem().getIdfactura())));
          facturas.setCrudListener(new CrudListener<Factura>() {
             @Override
             public Collection<Factura> findAll() {
@@ -198,15 +197,9 @@ public class FacturasView extends VerticalLayout {
         add(divtexto);
     }
 
-    public void botondetalles(){
-        Button botondetalles = new Button ("Detalles");
-        botondetalles.addClickListener(e-> detalles());
-        add(botondetalles);
-    }
 
-    public void detalles(){
-        getUI().ifPresent(ui -> ui.navigate("formulariofactura"+"/"+facturas.getGrid().asSingleSelect().getValue().getIdfactura()));
-    }
+
+
 
 }
 
